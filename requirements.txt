@@ -1,0 +1,5 @@
+environs==9.3.2
+gunicorn==20.1.0
+uvicorn==0.14.0
+httptools==0.2.0
+uvloop==0.15.2
