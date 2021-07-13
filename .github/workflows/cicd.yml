@@ -11,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      -
-        name: Get version
+
+      - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::$(echo $GITHUB_REF | cut -d / -f 3)
-      -
-        name: Make tag
+
+      - name: Make tag
         id: make_tag
         run: echo ::set-output name=TAG::$(echo ${{ secrets.DOCKER_REGISTRY_URL }}/${{ github.repository }}:${{ steps.get_version.outputs.VERSION }}
-      - 
-        name: Login
+
+      - name: Login
         uses: actions-hub/docker/login@master 
         env:
           DOCKER_REGISTRY_URL: ${{ secrets.DOCKER_REGISTRY_URL }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - 
-        name: Build
+
+      - name: Build
         if: success()
         run docker build -t ${{ steps.make_tag.outputs.TAG }} .
-      -
-        name: Push 
+
+      - name: Push 
         if: success()
         uses: action-hub/docker@master
         with:
