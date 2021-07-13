@@ -1,10 +1,8 @@
 
 on:
   push:
-    branches:
-      - master
     tags:
-      - v*
+      - '*'
 jobs:
   build_and_push:
     name: "Build and push"
@@ -18,8 +16,7 @@ jobs:
 
       - name: Make tag
         id: make_tag
-        #run: echo ::set-output name=TAG::$(echo ${{ secrets.DOCKER_REGISTRY_URL }}/${{ github.repository }}:${{ steps.get_version.outputs.VERSION }})
-        run: echo ::set-output name=TAG::$(echo ${{ secrets.DOCKER_REGISTRY_URL }}foo:bar)
+        run: echo ::set-output name=TAG::$(echo ${{ secrets.DOCKER_REGISTRY_URL }}/${{ github.repository }}:${{ steps.get_version.outputs.VERSION }})
 
       - name: Login
         uses: actions-hub/docker/login@master 
