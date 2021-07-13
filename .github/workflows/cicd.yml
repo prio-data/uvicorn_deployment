@@ -28,11 +28,9 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build
-        if: success()
         run docker build -t ${{ steps.make_tag.outputs.TAG }} .
 
       - name: Push
-        if: success()
         uses: action-hub/docker@master
         with:
           args: push ${{ steps.make_tag.outputs.TAG }}
