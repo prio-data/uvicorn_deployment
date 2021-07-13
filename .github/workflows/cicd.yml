@@ -31,7 +31,7 @@ jobs:
         if: success()
         run docker build -t ${{ steps.make_tag.outputs.TAG }} .
 
-      - name: Push 
+      - name: Push
         if: success()
         uses: action-hub/docker@master
         with:
