@@ -70,3 +70,6 @@ try:
     wsgi_app = env.str("APP")
 except environs.EnvError:
     raise AssertionError("APP env variable must be set, ponting to the WSGI-to run.")
+
+if (statsd_host := env.str("STATSD_HOST",None) is not None):
+    statsd_prefix = wsgi_app
