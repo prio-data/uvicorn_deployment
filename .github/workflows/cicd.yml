@@ -31,7 +31,7 @@ jobs:
         run: docker build -t ${{ steps.make_tag.outputs.TAG }} .
 
       - name: Push
-        uses: action-hub/docker@master
+        uses: actions-hub/docker@master
         with:
           args: push ${{ steps.make_tag.outputs.TAG }}
 
