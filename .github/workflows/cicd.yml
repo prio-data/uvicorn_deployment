@@ -28,7 +28,7 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build
-        run docker build -t ${{ steps.make_tag.outputs.TAG }} .
+        run: docker build -t ${{ steps.make_tag.outputs.TAG }} .
 
       - name: Push
         uses: action-hub/docker@master
