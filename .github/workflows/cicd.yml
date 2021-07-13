@@ -19,7 +19,7 @@ jobs:
       - name: Make tag
         id: make_tag
         #run: echo ::set-output name=TAG::$(echo ${{ secrets.DOCKER_REGISTRY_URL }}/${{ github.repository }}:${{ steps.get_version.outputs.VERSION }})
-        run: echo ::set-output name=TAG::$(echo "foo:bar")
+        run: echo ::set-output name=TAG::$(echo ${{ secrets.DOCKER_REGISTRY_URL }}/foo:bar)
 
       - name: Login
         uses: actions-hub/docker/login@master 
