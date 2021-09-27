@@ -8,9 +8,9 @@ app, for example `my_app.app:app`. Other ENV configurable options are:
 | Setting         | Help                                            |Default                       |
 |-----------------|-------------------------------------------------|------------------------------|
 |LOG_LEVEL        |The python loglevel to use (debug, info, etc.)   |warning                       |
-|WEB_CONCURRENCY  |                                                 |cpu_count * WORKERS_PER_CORE  |
-|WORKERS_PER_CORE |                                                 |1                             |
-|MAX_WORKERS      |                                                 |None                          |
+|WEB_CONCURRENCY  |Number of workers to use                         |cpu_count * WORKERS_PER_CORE  |
+|WORKERS_PER_CORE |Workers per core, if WEB_CONCURRENCY is unset    |1                             |
+|MAX_WORKERS      |Maximum possible number of workers               |None                          |
 |GRACEFUL_TIMEOUT |                                                 |400                           |
 |TIMEOUT          |                                                 |400                           |
 |KEEPALIVE        |                                                 |400                           |
