@@ -15,6 +15,8 @@ app, for example `my_app.app:app`. Other ENV configurable options are:
 |TIMEOUT          |                                                 |400                           |
 |KEEPALIVE        |                                                 |400                           |
 |WORKER_CLASS     |Class to instantiate                             |uvicorn.workers.UvicornWorker |
-|IS_BACKEND       |Allows proxying from anywhere.                   |False                         |
+|ACCESS_LOG_FILE  |The file to write access logs to (- for stdout)  |(/var/log/app/)access.log     |
+|ERROR_LOG_FILE   |The file to write error logs to (- for stdout)   |(/var/log/app/)error.log      |
+|CAPTURE_OUTPUT   |Capture output from stdout in errorlog           |False                         |
 
 Do not set `IS_BACKEND` to true unless app is unreachable from the outside.
