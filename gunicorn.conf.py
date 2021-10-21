@@ -29,8 +29,9 @@ except FileExistsError:
 
 bind = "0.0.0.0:80"
 
-accesslog = in_log_dir("access.log")
-errorlog = in_log_dir("error.log")
+capture_output = env.bool("CAPTURE_OUTPUT", "False")
+accesslog = env.str("ACCESS_LOG_FILE", in_log_dir("access.log"))
+errorlog = env.str("ERROR_LOG_FILE", in_log_dir("error.log"))
 
 worker_tmp_dir = "/dev/shm"
 
