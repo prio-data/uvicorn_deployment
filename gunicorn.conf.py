@@ -7,8 +7,8 @@ Refer to https://docs.gunicorn.org/en/stable/settings.html to see what each sett
 
 """
 import os
+import multiprocessing
 from environs import Env
-
 
 env = Env()
 env.read_env()
@@ -135,12 +135,13 @@ user                = env.int("GUNICORN_USER",                 1005)
 group               = env.int("GUNICORN_GROUP",                205)
 umask               = env.int("GUNICORN_UMASK",                0)
 initgroups          = env.bool("GUNICORN_INITGROUPS",          False)
-forwarded_allow_ips = env.str("GUNICORN_FORWARDED_ALLOW_IPS",  '127.0.0.1')
 pythonpath          = env.str("GUNICORN_PYTHONPATH",           None)
 paste               = env.str("GUNICORN_PASTE",                None)
 proxy_protocol      = env.bool("GUNICORN_PROXY_PROTOCOL",      False)
-proxy_allow_ips     = env.str("GUNICORN_PROXY_ALLOW_IPS",      '127.0.0.1')
 strip_header_spaces = env.bool("GUNICORN_STRIP_HEADER_SPACES", False)
+
+proxy_allow_ips     = env.str("GUNICORN_PROXY_ALLOW_IPS",      "127.0.0.1")
+forwarded_allow_ips = env.str("GUNICORN_FORWARDED_ALLOW_IPS",  "127.0.0.1")
 
 #raw_paste_global_conf = env.str("GUNICORN_RAW_PASTE_GLOBAL_CONF", [])
 #tmp_upload_dir = env.str("GUNICORN_TMP_UPLOAD_DIR", None)
@@ -154,6 +155,10 @@ backlog = env.int("GUNICORN_BACKLOG", 2048)
 # -- Worker Processes
 
 workers             = env.int("GUNICORN_WORKERS",             1)
+if workers_per_core := env.int("GUNICORN_WORKERS_PER_CORE", 0):
+    cores = multiprocessing.cpu_count()
+    workers = cores * workers_per_core
+
 worker_class        = env.str("GUNICORN_WORKER_CLASS",        'sync')
 threads             = env.int("GUNICORN_THREADS",             1)
 worker_connections  = env.int("GUNICORN_WORKER_CONNECTIONS",  1000)
