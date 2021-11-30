@@ -16,7 +16,12 @@ env.read_env()
 # -- Globals
 
 PRODUCTION        = env.bool("GUNICORN_PRODUCTION", True)
-LOGGING_DIRECTORY = "/var/log/app"
+LOGGING_DIRECTORY = "/home/gunicorn/log"
+
+try:
+    os.makedirs(LOGGING_DIRECTORY)
+except FileExistsError:
+    pass
 
 *_, app_ref = env.str("GUNICORN_APP","app:app").split(".")
 APP_MODULE_NAME, *_ = app_ref.split(":")
@@ -39,7 +44,7 @@ errorlog                          = env.str("GUNICORN_ERROR_LOG_FILE",          
 disable_redirect_access_to_syslog = env.bool("GUNICORN_DISABLE_REDIRECT_ACCESS_TO_SYSLOG", False)
 access_log_format                 = env.str("GUNICORN_ACCESS_LOG_FORMAT",                  '%(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"')
 loglevel                          = env.str("GUNICORN_LOGLEVEL",                           'info')
-capture_output                    = env.bool("GUNICORN_CAPTURE_OUTPUT",                    False)
+capture_output                    = env.bool("GUNICORN_CAPTURE_OUTPUT",                    True)
 logger_class                      = env.str("GUNICORN_LOGGER_CLASS",                       'gunicorn.glogging.Logger')
 
 logconfig                         = env.str("GUNICORN_LOGCONFIG",                          None)
@@ -71,9 +76,9 @@ ciphers                 = env.str("GUNICORN_CIPHERS",                  None)
 
 # -- Security
 
-limit_request_line       = env.str("GUNICORN_LIMIT_REQUEST_LINE",       4094)
-limit_request_fields     = env.str("GUNICORN_LIMIT_REQUEST_FIELDS",     100)
-limit_request_field_size = env.str("GUNICORN_LIMIT_REQUEST_FIELD_SIZE", 8190)
+limit_request_line       = env.int("GUNICORN_LIMIT_REQUEST_LINE",       4094)
+limit_request_fields     = env.int("GUNICORN_LIMIT_REQUEST_FIELDS",     100)
+limit_request_field_size = env.int("GUNICORN_LIMIT_REQUEST_FIELD_SIZE", 8190)
 
 # -- Server Hooks
 
@@ -127,12 +132,9 @@ def on_exit(server):
 preload_app         = env.bool("GUNICORN_PRELOAD_APP",         False)
 sendfile            = env.str("GUNICORN_SENDFILE",             None)
 reuse_port          = env.bool("GUNICORN_REUSE_PORT",          False)
-chdir               = env.str("GUNICORN_CHDIR",                '/home/docs/checkouts/readthedocs.org/user_builds/gunicorn-docs/checkouts/stable/docs/source')
 daemon              = env.bool("GUNICORN_DAEMON",              False)
 pidfile             = env.str("GUNICORN_PIDFILE",              None)
 worker_tmp_dir      = env.str("GUNICORN_WORKER_TMP_DIR",       None)
-user                = env.int("GUNICORN_USER",                 1005)
-group               = env.int("GUNICORN_GROUP",                205)
 umask               = env.int("GUNICORN_UMASK",                0)
 initgroups          = env.bool("GUNICORN_INITGROUPS",          False)
 pythonpath          = env.str("GUNICORN_PYTHONPATH",           None)
@@ -143,13 +145,17 @@ strip_header_spaces = env.bool("GUNICORN_STRIP_HEADER_SPACES", False)
 proxy_allow_ips     = env.str("GUNICORN_PROXY_ALLOW_IPS",      "127.0.0.1")
 forwarded_allow_ips = env.str("GUNICORN_FORWARDED_ALLOW_IPS",  "127.0.0.1")
 
+user                = 1005
+group               = 1005
+
 #raw_paste_global_conf = env.str("GUNICORN_RAW_PASTE_GLOBAL_CONF", [])
 #tmp_upload_dir = env.str("GUNICORN_TMP_UPLOAD_DIR", None)
 #secure_scheme_headers = env.str("GUNICORN_SECURE_SCHEME_HEADERS", {'X-FORWARDED-PROTOCOL': 'ssl', 'X-FORWARDED-PROTO': 'https', 'X-FORWARDED-SSL': 'on'})
+#chdir               = env.str("GUNICORN_CHDIR",                '/home/docs/checkouts/readthedocs.org/user_builds/gunicorn-docs/checkouts/stable/docs/source')
 
 # -- Server Socket
 
-bind    = [env.str("GUNICORN_BIND",   "0.0.0.0:80")]
+bind    = [env.str("GUNICORN_BIND",   "0.0.0.0:8080")]
 backlog = env.int("GUNICORN_BACKLOG", 2048)
 
 # -- Worker Processes
