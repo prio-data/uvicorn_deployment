@@ -23,14 +23,13 @@ try:
 except FileExistsError:
     pass
 
-*_, app_ref = env.str("GUNICORN_APP","app:app").split(".")
-APP_MODULE_NAME, *_ = app_ref.split(":")
-
 logfile = lambda f: os.path.join(LOGGING_DIRECTORY, f)
 
 # -- Config File
 
-wsgi_app = env.str("GUNICORN_APP","")
+wsgi_app = env.str("GUNICORN_APP","app:app")
+
+APP_MODULE_NAME, *_ = wsgi_app.split(".")
 
 # -- Debugging
 
