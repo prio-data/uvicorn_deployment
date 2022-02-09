@@ -26,5 +26,5 @@ jobs:
           context: .
           push: true
           tags: |
-            uvicorn-deployment:${{ steps.get_version.outputs.VERSION }}
-            uvicorn-deployment:latest
+            peder2911/uvicorn-deployment:${{ steps.get_version.outputs.VERSION }}
+            peder2911/uvicorn-deployment:latest
