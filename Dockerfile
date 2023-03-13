@@ -1,6 +1,6 @@
-FROM python:3.8
+FROM python:3.9
 RUN groupadd -g 205 server
-RUN useradd -u 1005 -m -s /bin/bash gunicorn 
+RUN useradd -u 2000 -m -s /bin/bash gunicorn
 USER gunicorn
 
 COPY requirements.txt /home/gunicorn/requirements.txt

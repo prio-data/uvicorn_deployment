@@ -144,8 +144,8 @@ strip_header_spaces = env.bool("GUNICORN_STRIP_HEADER_SPACES", False)
 proxy_allow_ips     = env.str("GUNICORN_PROXY_ALLOW_IPS",      "127.0.0.1")
 forwarded_allow_ips = env.str("GUNICORN_FORWARDED_ALLOW_IPS",  "127.0.0.1")
 
-user                = 1005
-group               = 1005
+user                = 2000
+group               = 2000
 
 #raw_paste_global_conf = env.str("GUNICORN_RAW_PASTE_GLOBAL_CONF", [])
 #tmp_upload_dir = env.str("GUNICORN_TMP_UPLOAD_DIR", None)
